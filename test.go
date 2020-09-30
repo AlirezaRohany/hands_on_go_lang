@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "math"
 
 func main() {
 	/* This is my first sample program. */
@@ -116,12 +117,76 @@ func main() {
       default:
          fmt.Printf("don't know the type")     
    }
-   fmt.Println("")  
+   fmt.Println("\n")  
 
 
    // channel
 
 
-    
+   var j int
+   t:=15
+   for j = 0; j < 10; j++ {
+      fmt.Printf("value of j: %d\n", j)
+   }
+   for j <= t {
+      fmt.Printf("value of j: %d\n", j)
+      j++
+   }
+   numbers := [7]int{10, 20, 3, 15,1000,60} 
+   for n,m := range numbers{
+   	fmt.Printf("m=%d at %d\n",m,n)
+   }
+   fmt.Println("")
+   
 
+   number10:=10
+   number15:=15
+   fmt.Println(max(number15,number10),"\n")
+
+
+   s1,s2:=swap("ali","reza")
+   fmt.Println(s1,s2,"\n")
+
+
+   // call by value and call by refrence functions
+
+
+   getSquareRoot := func(x float64) float64 {
+      return math.Sqrt(x)
+   }
+   fmt.Println(getSquareRoot(289),"\n")
+
+
+   circle:=Circle{x:0,y:0,radius:5}
+   fmt.Println(circle.area(),"\n")
+
+}
+
+
+
+
+
+
+
+func max(num1, num2 int) int {
+   var result int
+   if (num1 > num2) {
+      result = num1
+   } else {
+      result = num2
+   }
+   return result 
+}
+
+
+func swap(x, y string) (string, string) {
+   return y, x
+}
+
+
+type Circle struct{
+	x,y,radius float64
+}
+func(circle Circle) area() float64{
+	return math.Pi*circle.radius*circle.radius
 }
