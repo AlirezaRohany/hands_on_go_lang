@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "math"
+import "strings"
 
 func main() {
 	/* This is my first sample program. */
@@ -45,6 +46,7 @@ func main() {
 // pointers at all
    g:=4
    ptr:= &g
+   fmt.Println("Pointers:")
    fmt.Println(g)
    fmt.Println(ptr)
    fmt.Println(*ptr)
@@ -160,6 +162,86 @@ func main() {
    circle:=Circle{x:0,y:0,radius:5}
    fmt.Println(circle.area(),"\n")
 
+
+   var greeting =  "Hello,Hello!"
+   fmt.Printf("normal string: ")
+   fmt.Printf("%s", greeting)
+   fmt.Printf("\n")
+   fmt.Printf("hex bytes: ")
+   for i := 0; i < len(greeting); i++ {
+       fmt.Printf("%x ", greeting[i])
+   }
+   newGreeting:=[]string{greeting,"moreHello!"}
+   fmt.Println("")
+   fmt.Println(newGreeting)
+   veryNewGreeting:=strings.Join(newGreeting,"  space between elements  ")
+   fmt.Println(veryNewGreeting,"\n")
+
+
+   var array =[]int {1000, 2, 3, 17, 50}
+   for i:=0;i<len(array);i++{
+   	array[i]=100+array[i]
+   	fmt.Printf("Element[%d]=%d\n",i,array[i])
+   }
+   var arrayAverage float32
+   arrayAverage=getAverage(array,len(array))
+   fmt.Println(arrayAverage,"\n")
+
+
+   x1:=20
+   y1:=185
+   swap2(&x1,&y1)
+   fmt.Println(x1)
+   fmt.Println(y1)
+   fmt.Println("")
+
+
+   var Book1 Book   
+   var Book2 Book 
+   Book1.title = "Go Programming"
+   Book1.author = "Mahesh Kumar"
+   Book1.subject = "Go Programming Tutorial"
+   Book1.book_id = 6495407
+   Book2.title = "Telecom Billing"
+   Book2.author = "Zara Ali"
+   Book2.subject = "Telecom Billing Tutorial"
+   Book2.book_id = 6495700
+   printBook(&Book1)
+   printBook(&Book2)
+   pbook:=&Book1
+   fmt.Println(Book1.author,"   ", pbook.author, "   ", (&Book1).author)
+   fmt.Println("\n")
+
+
+   nums:=[]int {0,1,2,3,4,5,6,7,8}
+   printSlice(nums)
+   fmt.Println(nums)
+   fmt.Println(nums[1:4])
+   fmt.Println(nums[:3])
+   fmt.Println(nums[4:])
+   nums1:=make([]int,0,5)
+   printSlice(nums1)
+   nums2:=nums[:2]
+   printSlice(nums2)
+   nums3:=nums[2:5]
+   printSlice(nums3)
+   fmt.Println("\n")
+   var numberrs []int 
+   printSlice(numberrs)
+   numberrs=append(numberrs,0)
+   printSlice(numberrs)
+   numberrs=append(numberrs,1)
+   printSlice(numberrs)
+   numberrs=append(numberrs,2,3,4)
+   printSlice(numberrs)
+   numberrs1:=make([]int,len(numberrs),cap(numberrs)*2)
+   numberrs1[0]=140
+   numberrs1[4]=200
+   printSlice(numberrs1)
+   copy(numberrs1,numberrs)
+   printSlice(numberrs)
+   printSlice(numberrs1)
+
 }
 
 
@@ -189,4 +271,41 @@ type Circle struct{
 }
 func(circle Circle) area() float64{
 	return math.Pi*circle.radius*circle.radius
+}
+
+
+func getAverage(arr []int, size int) float32 {
+	var sum float32
+	var avg float32
+	for i := 0; i < size; i++ {
+		sum+=float32(arr[i])
+	}
+	avg=sum/float32(size)
+	return avg
+}
+
+
+func swap2(x *int , y *int){
+	temp:=*x
+	*x=*y
+	*y=temp
+}
+
+
+type Book struct{
+	title string 
+	author string
+    subject string
+    book_id int
+}
+func printBook( book *Book ) {
+   fmt.Printf( "Book title : %s\n", book.title);
+   fmt.Printf( "Book author : %s\n", book.author);
+   fmt.Printf( "Book subject : %s\n", book.subject);
+   fmt.Printf( "Book book_id : %d\n", book.book_id);
+}
+
+
+func printSlice(x []int){
+	fmt.Printf("len=%d  cap=%d  slice=%v\n",len(x),cap(x),x)
 }
