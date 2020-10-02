@@ -3,6 +3,7 @@ package main
 import "fmt"
 import "math"
 import "strings"
+import "errors"
 
 func main() {
 	/* This is my first sample program. */
@@ -159,7 +160,7 @@ func main() {
    fmt.Println(getSquareRoot(289),"\n")
 
 
-   circle:=Circle{x:0,y:0,radius:5}
+   circle:=Circle{x:0,y:0,radius:6}
    fmt.Println(circle.area(),"\n")
 
 
@@ -241,13 +242,71 @@ func main() {
    copy(numberrs1,numberrs)
    printSlice(numberrs)
    printSlice(numberrs1)
+   fmt.Println("\n")
+
+
+   numbs := []int{0,1,2,3,4,5,6,7,8}    
+   for i:= range numbs {
+      fmt.Println("Slice item",i,"is",numbs[i])
+   }
+   countryCapitalMap := map[string] string {"France":"Paris","Italy":"Rome","Japan":"Tokyo"}
+   countryCapitalMap["Iran"]="Tehran"
+   for country := range countryCapitalMap {
+      fmt.Println("Capital of",country,"is",countryCapitalMap[country])
+   }
+   for country,capital := range countryCapitalMap {
+      fmt.Println("Capital of",country,"is",capital)
+   }
+   delete(countryCapitalMap,"Japan")
+   UScapital, exist := countryCapitalMap["United States"]
+   fmt.Println(exist)
+   fmt.Println("Us capital:",UScapital)
+   IRANcapital, exists:=countryCapitalMap["Iran"]
+   fmt.Println(exists)
+   fmt.Println("Iran capital:",IRANcapital)
+   JAPANcapital, existss:=countryCapitalMap["Japan"]
+   fmt.Println(existss)
+   fmt.Println("Japan capital:",JAPANcapital)
+
+
+   fmt.Println("0! =",factoriel(0),"  1! =",factoriel(1),"  2! =",factoriel(2),"  5! =",factoriel(5),"  6! =",factoriel(6),"\n")
+
+
+   fmt.Println("F0 =",fibonacci(0), "  F1 =",fibonacci(1),"  F2 =",fibonacci(2),"  F9 =",fibonacci(9))
+   for i := 0; i < 10; i++ {
+   		fmt.Printf("%d ",fibonacci(i))
+   }
+   fmt.Println("\n")
+
+
+   var sam int = 17
+   var cunt int = 5
+   var min float32
+   min = float32(sam)/float32(cunt)
+   fmt.Printf("Value of min : %f\n\n",min)
+
+
+   circle2:=Circle{x:0,y:0,radius:5}
+   var rect Shape
+   rect=Rectangle{10,5}
+   fmt.Printf("Circle area: %f\n",getArea(circle2))
+   fmt.Printf("Rectangle area: %f\n\n",getArea(rect))
+
+
+   sqrResult, err:=sqrt(-10)
+   if err!=nil{
+   	fmt.Println(err)
+   }else{
+   	fmt.Println(sqrResult)
+   }
+   sqrResult,err=sqrt(169)
+   if err!=nil{
+   	fmt.Println(err)
+   }else{
+   	fmt.Println(sqrResult)
+   }
 
 }
-
-
-
-
-
 
 
 func max(num1, num2 int) int {
@@ -308,4 +367,39 @@ func printBook( book *Book ) {
 
 func printSlice(x []int){
 	fmt.Printf("len=%d  cap=%d  slice=%v\n",len(x),cap(x),x)
+}
+
+
+func factoriel(n int) int{
+	if(n==1 || n==0){ return 1}
+	return n*factoriel(n-1)
+}
+
+
+func fibonacci(n int) int {
+	if (n==0){return 0}
+	if (n==1){return 1}
+	return fibonacci(n-1)+fibonacci(n-2)
+}
+
+
+type Shape interface{
+	area() float64
+}
+type Rectangle struct{
+	width,height float64
+}
+func(rectangle Rectangle) area() float64{
+	return rectangle.width * rectangle.height
+}
+func getArea(shape Shape) float64{
+	return shape.area()
+}
+
+
+func sqrt(x float64) (float64,error){
+	if(x<0){
+		return 0, errors.New("Negative number passed to Sqrt")
+	}
+	return math.Sqrt(x),nil
 }
